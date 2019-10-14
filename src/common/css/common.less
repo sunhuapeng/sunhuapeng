@@ -1,0 +1,78 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('../../font/iconfont.eot');
+  src: url('../../font/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('../../font/iconfont.woff') format('woff'),
+    url('../../font/iconfont.ttf') format('truetype'),
+    url('../../font/iconfont.svg#iconfont') format('svg');
+}
+
+@font-face {
+  font-family: 'iskpota'; //重命名字体名
+  src: url('../../font/iskpota.ttf'); //引入字体
+  font-weight: normal;
+  font-style: normal;
+}
+
+.iskpota {
+  font-family: "iskpota" !important;
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@dark1: #1E1E1E;
+@dark2: #51515B;
+@dark3: #787679;
+@dark4: #CEC4BC;
+@dark5: #EBE0C2;
+@dark6: #D3D2D0;
+@dark7: #F3F0EB;
+@dark8: #ffffff;
+
+.color {
+  color: #1E1E1E;
+  color: #51515B;
+  color: #787679;
+  color: #BEB1A1;
+  color: #EBE0C2;
+  color: #D3D2D0;
+  color: #F3F0EB;
+  color: #ffffff;
+}
+
+// 按钮
+.sun-btn {
+  padding: 6px 15px;
+  color: @dark8;
+  border-radius: 4px;
+  background: @dark3;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background: @dark4;
+  }
+}
+.w {
+  width: 1000px;
+  margin: 0 auto;
+}
+.f{
+  float:left;
+}
+.r{
+  float:right;
+}
+
+// 初始化md样式
+.article-main .v-note-wrapper{
+  border:none;
+}
