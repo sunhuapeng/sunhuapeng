@@ -19,7 +19,7 @@ export default {
       var hour=v.getHours(); 
       var minute=v.getMinutes(); 
       var second=v.getSeconds(); 
-      return year+"-"+(month<10?'0'+month:month)+"-"+(date<10?'0'+date:date)+" "+hour+":"+minute+":"+second; 
+      return year+"-"+(month<10?'0'+month:month)+"-"+(date<10?'0'+date:date); 
     }
   }
 }

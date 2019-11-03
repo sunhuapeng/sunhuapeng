@@ -16,11 +16,10 @@ export default {
 <style leng="less">
 @import "./common/css/common.less";
 html,body{
-  height:100%;
-  background:#f4f5f5;
+  /* height:100%; */
 }
 #app{
-  height:100%;
+  /* height:100%; */
   font-family: "Microsoft YaHei";
 }
 </style>

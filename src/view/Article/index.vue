@@ -1,56 +1,37 @@
 <template>
   <div class="article-page">
-    <div
-      class="article-main"
-      v-if="artInfo"
-    >
-      <p
-        class="name"
-        v-text="artInfo.name"
-      ></p>
-      <p class="other">
-        <span
-          class="author"
-          v-if="artInfo.author"
-        >
-          <span class="iconfont">&#xe65c;</span>
-          {{artInfo.author}}
-        </span>
-        <span
-          class="tag"
-          v-if="artInfo.tag"
-        >
-          <span class="iconfont">&#xe607;</span>
-          {{artInfo.tag}}
-        </span>
-        <span
-          class="reprint"
-          v-if="artInfo.reprint"
-        >
-          <span class="iconfont">&#xe63e;</span>
-          <a
-            :href="artInfo.reprint"
-            target="view_window"
-            v-text="'转载'"
-          ></a>
-        </span>
-        <span
-          class="date"
-          v-if="artInfo.date"
-        >
-          <span class="iconfont">&#xe613;</span>
-          {{artInfo.date}}
-        </span>
-      </p>
-      <div class="coverImg">
-        <img
-          class="coverPng"
-          v-if="artInfo.coverPng"
-          :src="artInfo.coverPng"
-          alt=""
-        >
+    <div class="top-title" v-if="artInfo">
+      <div class="adrom"></div>
+      <div class="title-main mw">
+        <div class="content">
+          <p class="name" v-text="artInfo.name"></p>
+          <p>
+            <span class="author" v-if="artInfo.author">
+              <span class="iconfont">&#xe65c;</span>
+              {{artInfo.author}}
+            </span>
+            <span class="tag" v-if="artInfo.tag">
+              <span class="iconfont">&#xe607;</span>
+              {{artInfo.tag}}
+            </span>
+            <span class="reprint" v-if="artInfo.reprint">
+              <span class="iconfont">&#xe63e;</span>
+              <a :href="artInfo.reprint" target="view_window" v-text="'转载·侵删'"></a>
+            </span>
+            <span class="date" v-if="artInfo.date">
+              <span class="iconfont">&#xe613;</span>
+              {{$dateFormet(artInfo.date)}}
+            </span>
+          </p>
+        </div>
       </div>
+    </div>
+    <div class="article-main" v-if="artInfo">
+      <!-- <div class="coverImg">
+        <img class="coverPng" v-if="artInfo.coverPng" :src="artInfo.coverPng" alt />
+      </div>-->
       <mavon-editor
+        v-if="value"
         v-html="value"
         :subfield="false"
         :defaultOpen="defaultData"
@@ -59,8 +40,14 @@
         @change="changeData"
         v-highlight
       />
+      <iframe
+        frameborder="0"
+        width="100%"
+        height="500px"
+        v-if="artInfo&&artInfo.case"
+        :src="`../../../static/three_case/html/${artInfo.case}`"
+      ></iframe>
     </div>
-    <iframe frameborder="0" width="100%" height="500px" v-if="artInfo&&artInfo.case" :src="`../../../static/three_case/html/${artInfo.case}`"></iframe>
   </div>
 </template>
 
@@ -84,7 +71,7 @@ export default {
       defaultData: "preview",
       articles: null,
       artInfo: null,
-      html:null
+      html: null
     };
   },
   methods: {
@@ -108,50 +95,80 @@ export default {
         });
       }
     });
+    document.body.scrollTop = 0 +'px'
   }
 };
 </script>
 
 <style lang="less" scope>
 .article-main {
-  width: 750px;
-  padding: 10px 20px;
   background: #ffffff;
   box-sizing: border-box;
-  margin-bottom:20px;
+  margin-bottom: 20px;
+  max-width: 677px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.name {
-  display: inline-block;
-  max-width: 100%;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
-  // margin:20px 0
+.top-title {
+  height: 420px;
+  background-image: linear-gradient(
+    -25deg,
+    rgb(253, 156, 127) 30%,
+    rgb(255, 108, 133) 100%
+  );
+  background-image: -moz-linear-gradient(
+    -25deg,
+    rgb(253, 156, 127) 30%,
+    rgb(255, 108, 133) 100%
+  );
+  background-image: -webkit-linear-gradient(
+    -25deg,
+    rgb(253, 156, 127) 30%,
+    rgb(255, 108, 133) 100%
+  );
+  background-image: -ms-linear-gradient(
+    -25deg,
+    rgb(253, 156, 127) 30%,
+    rgb(255, 108, 133) 100%
+  );
 }
-.other {
-  // margin-bottom: 20px;
-  span {
-    color: #999999;
-    font-size: 14px;
-    line-height: 50px;
+div.adrom {
+  height: 5px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background: rgba(255, 255, 255, 0.5);
+}
+.mw {
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+  margin: auto;
+  height: 100%;
+  position: relative;
+
+  & > div.content {
+    position: absolute;
+    bottom: 100px;
   }
-  & > span {
-    &:hover {
-      color: #666666;
+  .name {
+    font-size: 32px;
+    color: #ffffff;
+    & + p {
+      color: #ffffff;
+      opacity: 0.8;
+      line-height: 32px;
+      margin-top: 20px;
+      span ~ span {
+        margin-left: 40px;
+      }
     }
   }
-  span ~ span {
-    margin-left: 20px;
-  }
 }
-.coverImg {
-  width: 100%;
-  margin-bottom: 20px;
-  .coverPng {
-    width: 100%;
-    display: block;
-    vertical-align: middle;
-  }
+.article-main {
+  width: 1000px;
+  margin: 0 auto;
+  margin-top: 100px;
 }
 </style>
 

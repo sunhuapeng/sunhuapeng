@@ -1,11 +1,11 @@
 <template>
   <div class="view">
-    <div class="home w">
-      <nav-bar :type="'nav'">
-      </nav-bar>
+    <div class="home">
+      <!-- <nav-bar :type="'nav'">
+      </nav-bar> -->
       <router-view class="router-view">
       </router-view>
-    <footer-bar></footer-bar>
+    <!-- <footer-bar></footer-bar> -->
     </div>
   </div>
 </template>
@@ -27,16 +27,16 @@ export default {
   methods: {}
 };
 </script>
-<style lang="less" scropt>
+<style lang="less" scoped>
 .view{
-  height:100%;
+  // height:100%;
 }
 .home {
-  height: calc(100% - 40px);
+  // height: calc(100% - 40px);
 }
 .router-view {
-  padding: 20px 0;
-  min-height:calc(100% - 40px);
+  // padding: 20px 0;
+  // min-height:calc(100% - 40px);
   box-sizing: border-box;
 }
 </style>

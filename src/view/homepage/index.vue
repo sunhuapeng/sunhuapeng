@@ -1,65 +1,87 @@
 <template>
   <div class="homepage">
-    <div class="map">
-      <three-china-map></three-china-map>
-    </div>
-    <div class="screen">
-      <p
-        class="date-sort"
-        @click="setDateSort()"
-        :class="dateSort?'':'cc'"
-      >日期排序 <span class="iconfont">&#xe66a;</span> </p>
-      <p
-        class="original"
-        :class="sort.original?'cc':''"
-        @click="setOriginal()"
-      >原创</p>
-      <el-input
-        placeholder="输入关键词"
-        suffix-icon="el-icon-search"
-        v-model="sort.search"
-        class="search-input"
-        size="mini"
-        @change="changeSearch()"
-      >
-      </el-input>
-      <div
-        @click="refresh()"
-        class="refresh"
-      >刷新</div>
-
-    </div>
-    <div class="home-main">
-      <div class="article-list">
-        <art-list :artData="articleList"></art-list>
+    <div class="left-bar">
+      <div class="search-box">
+        <input type="text" v-model="search" @keydown.enter="searchEnterFun" placeholder="SEARCH" />
       </div>
-      <div class="side-bar">
-        <!-- <history-art></history-art> -->
+      <div class="Modular">
+        <h2>MENU</h2>
+        <ul>
+          <router-link
+            tag="li"
+            :to="data.router"
+            active-class="menu-item-active"
+            v-for="(data,index) in menuItem"
+            :key="index"
+            v-text="data.name"
+          ></router-link>
+        </ul>
       </div>
+      <div class="Modular">
+        <h2>HISTORY</h2>
+        <art-list :type="'left-bar'" :artData="articleList"></art-list>
+      </div>
+    </div>
+    <div class="right-main">
+      <div class="box"></div>
+      <div class="Modular">
+        <h2>I Am A Web Developer</h2>
+        <p
+          class="content"
+        >你可能会问我，为什么要做一个这样的网站，这是一个好问题，其实想做自己的网站已经很久了，奈何工作的颠簸，生活的蹉跎，使它尘封、落灰；只是想简单的记录一下学习、生活，有关于技术的理解，也会分享一些经验或者喜欢的事物，你可以来来去去，或者留下你的痕迹，我们可以互相交流，互相分享、种草、追动漫，希望可以给对方一点快乐。</p>
+      </div>
+      <art-main></art-main>
     </div>
   </div>
 </template>
 <script>
-import map from "@/components/three/china-map";
-import artList from "@/components/artList";
+import artlist from "@/components/artList";
 import fileList from "@/common/js/getFile.js";
-import historyArt from "@/components/historyArt";
+import artMain from "@/components/artMain";
 export default {
   name: "homepage",
   components: {
-    "three-china-map": map,
-    "art-list": artList,
-    "history-art": historyArt
+    "art-list": artlist,
+    "art-main": artMain
   },
   data() {
     return {
-      articleList: [],
-      searchVal: "",
-      dateSort: true,
-      sort: {
-        original: false,
-        search: ""
-      }
+      menuItem: [
+        {
+          name: "首页",
+          router: "/homepage"
+        },
+        {
+          name: "杂学笔记",
+          router: "/note"
+        },
+        {
+          name: "听说3D技术前景不错",
+          router: "/three"
+        },
+        {
+          name: "搞搞设计耍耍",
+          router: "/design"
+        },
+        {
+          name: "不增涉足的地方",
+          router: "/journey"
+        },
+        {
+          name: "陪她",
+          router: "/her"
+        },
+        {
+          name: "自恋一下",
+          router: "/accompany"
+        },
+        {
+          name: "不知道该写点啥",
+          router: "/nothing"
+        }
+      ],
+      search: "",
+      articleList: []
     };
   },
 
@@ -70,123 +92,90 @@ export default {
     getFiles() {
       fileList.fileList.then(res => {
         this.$store.dispatch("fileList", res);
+        console.log(res)
         this.articleList = this.$store.getters["fileList"];
       });
     },
-    refresh() {
-      this.sort = {
-        original: false,
-        search: ""
-      };
-      this.getFiles();
-    },
-    // 按照时间顺序筛选
-    setDateSort() {
-      this.dateSort = !this.dateSort;
-      this.articleList.sort((a, b) => {
-        if (this.dateSort) {
-          return Number(b.date) - Number(a.date);
-        } else {
-          return Number(a.date) - Number(b.date);
-        }
-      });
-    },
-    // 选择是否原创
-    setOriginal() {
-      this.sort.original = !this.sort.original;
-      let newArr = [];
-      this.sort.search = "";
-      this.articleList = this.$store.getters["fileList"];
-      this.articleList.forEach(e => {
-        if (this.sort.original) {
-          if (!e.reprint) {
-            newArr.push(e);
-          }
-          this.articleList = newArr;
-        }
-      });
-    },
-    // 关键字筛选
-    changeSearch() {
-      let newArr = [];
-      this.articleList = this.$store.getters["fileList"];
-      this.sort.original = false;
-      this.articleList.forEach(e => {
-        if (this.sort.search) {
-          if (e.name.indexOf(this.sort.search) !== -1) {
-            newArr.push(e);
-          }
-          this.articleList = newArr;
-        }
-      });
+    searchEnterFun() {
+      console.log(this.search);
+      // let newArr = [];
+      // this.articleList = this.$store.getters["fileList"];
+      // this.articleList.forEach(e => {
+      //   if (this.search) {
+      //     if (e.name.indexOf(this.search) !== -1) {
+      //       newArr.push(e);
+      //     }
+      //     this.articleList = newArr;
+      //   }
+      // });
     }
   }
 };
 </script>
-<style lang="less" scope>
-.home-main {
+<style lang="less" scoped>
+.homepage {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  & > div {
-    margin: 20px 0;
-  }
-  .article-list {
-    flex: 3;
+  .left-bar {
+    width: 360px;
+    background: #f4f6f8;
+    padding: 20px 60px 20px 60px;
     box-sizing: border-box;
-    margin-right: 20px;
+    padding-bottom: 40px;
+    .search-box {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #f4f6f8;
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 5px 10px;
+      box-sizing: border-box;
+      display: inline-block;
+      input {
+        display: inline-block;
+        height: 100%;
+        background: none;
+        outline: none;
+        border: 0px;
+        font-size: 18px;
+        color: #696969;
+      }
+    }
+
+    ul {
+      margin-top: 40px;
+      li {
+        height: 40px;
+        line-height: 38px;
+        border-bottom: 1px solid #909090;
+        color: #696969;
+        box-sizing: border-box;
+        cursor: pointer;
+        margin-top: 10px;
+        &:hover {
+          border-color: #ff6069;
+          transition: all 0.2s linear 0s;
+        }
+        &.menu-item-active {
+          border-color: #ff6069;
+          color: #ff6069;
+        }
+      }
+    }
   }
-  .side-bar {
-    flex: 1;
-    width: 380px;
+  .right-main {
+    width: calc(100% - 360px);
+    padding: 0 120px;
+    .box {
+      height: 460px;
+      background: #f0f;
+    }
+    .content {
+      margin-top: 40px;
+      color: #909090;
+      line-height: 28px;
+    }
   }
 }
-.screen {
-  display: flex;
-  // justify-content: space-between;
-  margin-top: 20px;
-  & > p ~ p {
-    margin-left: 20px;
-  }
-  .date-sort {
-    color: #999999;
-    line-height: 40px;
-    cursor: pointer;
-    &:hover {
-      color: #50c3ff;
-    }
-  }
-  .search-input {
-    width: 180px;
-    height: 32px;
-    line-height: 40px;
-    margin-left: 20px;
-  }
-  .original {
-    line-height: 40px;
-    color: #999999;
-    cursor: pointer;
-    &:hover {
-      color: #50c3ff;
-    }
-  }
-  .refresh {
-    font-size: 12px;
-    border-radius: 3px;
-    display: inline-block;
-    border: 1px solid #dcdfe6;
-    color: #606266;
-    background:#ffffff;
-    height: 16px;
-    padding: 5px 12px;
-    margin-top: 7px;
-    margin-left: 20px;
-    cursor: pointer;
-    &:hover{
-      background:#EAFAFF;
-    }
-  }
-  .cc {
-    color: #50c3ff;
-  }
-}
+
 </style>
