@@ -25,7 +25,7 @@ const mutations = {
       if (idArr.indexOf(id) !== -1) {
         id = Math.ceil(Math.random() * 1000000000)
       }
-      d.id = id
+      // d.id = id
     })
 
     state.fileList = data

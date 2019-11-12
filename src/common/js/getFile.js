@@ -25,6 +25,7 @@ var getFile = new Promise(resolve => {
         coverPng: dom.getElementsByClassName('coverPic')[0].innerHTML?dom.getElementsByClassName('coverPic')[0].innerHTML:null,
         // 文章案例
         case: dom.getElementsByClassName('case')[0]?dom.getElementsByClassName('case')[0].innerHTML:null,
+        id: dom.getElementsByClassName('id')[0]?dom.getElementsByClassName('id')[0].innerHTML:null,
         fileName:fil
       }
       if(Item.brief.length>60){

@@ -8,19 +8,23 @@
           <p>
             <span class="author" v-if="artInfo.author">
               <span class="iconfont">&#xe65c;</span>
-              {{artInfo.author}}
+              {{ artInfo.author }}
             </span>
             <span class="tag" v-if="artInfo.tag">
               <span class="iconfont">&#xe607;</span>
-              {{artInfo.tag}}
+              {{ artInfo.tag }}
             </span>
             <span class="reprint" v-if="artInfo.reprint">
               <span class="iconfont">&#xe63e;</span>
-              <a :href="artInfo.reprint" target="view_window" v-text="'转载·侵删'"></a>
+              <a
+                :href="artInfo.reprint"
+                target="view_window"
+                v-text="'转载·侵删'"
+              ></a>
             </span>
             <span class="date" v-if="artInfo.date">
               <span class="iconfont">&#xe613;</span>
-              {{$dateFormet(artInfo.date)}}
+              {{ $dateFormet(artInfo.date) }}
             </span>
           </p>
         </div>
@@ -44,9 +48,12 @@
         frameborder="0"
         width="100%"
         height="500px"
-        v-if="artInfo&&artInfo.case"
+        v-if="artInfo && artInfo.case"
         :src="`../../../static/three_case/html/${artInfo.case}`"
       ></iframe>
+    </div>
+    <div class="gitalk">
+      <div id="gitalk-container"></div>
     </div>
   </div>
 </template>
@@ -54,7 +61,8 @@
 <script>
 import hljs from "highlight.js";
 import Vue from "vue";
-
+import Gitalk from "gitalk";
+import "gitalk/dist/gitalk.css";
 import "highlight.js/styles/googlecode.css";
 Vue.directive("highlight", function(el) {
   let blocks = el.querySelectorAll("pre code");
@@ -78,6 +86,26 @@ export default {
     changeData(value, render) {
       console.log(render);
     },
+    initTalk() {
+      console.log(this.$route.query.id);
+      var gitalk = new Gitalk({
+        // gitalk的主要参数
+        clientID: "0b1f628009d15179d27f",
+        clientSecret: "69b877da8d038a42dccca8ac2dd6b214b2956abe",
+        repo: "sunhuapeng.github.io",
+        owner: "sunhuapeng",
+        admin: ["sunhuapeng"],
+        id: this.$route.query.id,
+        distractionFreeMode: false,
+        flipMoveOptions: {
+          staggerDelayBy: 150,
+          appearAnimation: "accordionVertical",
+          enterAnimation: "fade",
+          leaveAnimation: "fade"
+        }
+      });
+      gitalk.render("gitalk-container");
+    },
     getFiles() {},
     changeArtcal() {}
   },
@@ -95,7 +123,8 @@ export default {
         });
       }
     });
-    document.body.scrollTop = 0 +'px'
+    document.body.scrollTop = 0 + "px";
+    this.initTalk();
   }
 };
 </script>
@@ -170,5 +199,8 @@ div.adrom {
   margin: 0 auto;
   margin-top: 100px;
 }
+.gitalk {
+  width: 1000px;
+  margin: 10px auto;
+}
 </style>
-
