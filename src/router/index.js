@@ -2,13 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/view/home/index.vue'
 
-const xxtd = r =>
-  require.ensure([], () => r(require('@/view/xxtd/index.vue')), 'xxtd')
-const homepage = r =>
-  require.ensure([], () => r(require('@/view/homepage/index.vue')), 'homepage')
-
+const xxtd = r => require.ensure([], () => r(require('@/view/xxtd/index.vue')), 'xxtd')
+const homepage = r => require.ensure([], () => r(require('@/view/homepage/index.vue')), 'homepage')
 import article from '@/view/Article/index.vue'
-import tags from '@/view/tags/tags.vue'
 
 Vue.use(Router)
 

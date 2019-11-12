@@ -8,7 +8,7 @@ import axios from 'axios'
 import VueResource from 'vue-resource'
 import 'mavon-editor/dist/css/index.css'
 import '@/common/css/clear-style.css'
-import '@/common/css/common.less'
+import '@/common/css/common.css'
 import store from "@/store"
 import global from './global'
 import ElementUI from 'element-ui';
