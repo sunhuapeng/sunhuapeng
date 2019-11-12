@@ -7,7 +7,6 @@
 <script>
 export default {
   name: 'App',
-  components:{navPage}
 }
 </script>
 

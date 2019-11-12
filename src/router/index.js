@@ -33,12 +33,6 @@ export default new Router({
       ]
     },
     {
-      path: '/tags',
-      name: 'Tags',
-      component: tags
-    },
-
-    {
       path: '*',
       redirect: '/homepage'
     }
