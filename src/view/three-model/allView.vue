@@ -12,7 +12,11 @@
 export default {
   name: "allview",
   data() {
-    return {};
+    return {
+      scene:null,
+      camera:null,
+      renderer:null,
+    };
   },
   mounted() {},
   methods: {}

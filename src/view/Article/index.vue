@@ -97,12 +97,6 @@ export default {
         admin: ["sunhuapeng"],
         id: this.$route.query.id,
         distractionFreeMode: false,
-        flipMoveOptions: {
-          staggerDelayBy: 150,
-          appearAnimation: "accordionVertical",
-          enterAnimation: "fade",
-          leaveAnimation: "fade"
-        }
       });
       gitalk.render("gitalk-container");
     },

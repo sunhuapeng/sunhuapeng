@@ -2,7 +2,12 @@
   <div class="homepage">
     <div class="left-bar">
       <div class="search-box">
-        <input type="text" v-model="search" @keydown.enter="searchEnterFun" placeholder="SEARCH" />
+        <input
+          type="text"
+          v-model="search"
+          @keydown.enter="searchEnterFun"
+          placeholder="SEARCH"
+        />
       </div>
       <div class="Modular">
         <h2>MENU</h2>
@@ -11,7 +16,7 @@
             tag="li"
             :to="data.router"
             active-class="menu-item-active"
-            v-for="(data,index) in menuItem"
+            v-for="(data, index) in menuItem"
             :key="index"
             v-text="data.name"
           ></router-link>
@@ -22,17 +27,8 @@
         <art-list :type="'left-bar'" :artData="articleList"></art-list>
       </div>
     </div>
-    <div class="right-main">
-      <div class="box">
-        <all-view></all-view>
-      </div>
-      <div class="Modular" >
-        <h2>I Am A Web Developer</h2>
-        <p
-          class="content"
-        >你可能会问我，为什么要做一个这样的网站，这是一个好问题，其实想做自己的网站已经很久了，奈何工作的颠簸，生活的蹉跎，使它尘封、落灰；只是想简单的记录一下学习、生活，有关于技术的理解，也会分享一些经验或者喜欢的事物，你可以来来去去，或者留下你的痕迹，我们可以互相交流，互相分享、种草、追动漫，希望可以给对方一点快乐。</p>
-      </div>
-      <art-main ></art-main>
+    <div class="view">
+      <router-view class="roter-view"> </router-view>
     </div>
   </div>
 </template>
@@ -40,32 +36,36 @@
 import artlist from "@/components/artList";
 import fileList from "@/common/js/getFile.js";
 import artMain from "@/components/artMain";
-import allView from '@/view/three-model/allView'
+import allView from "@/view/three-model/allView";
 export default {
   name: "homepage",
   components: {
     "art-list": artlist,
     "art-main": artMain,
-    'all-view': allView
+    "all-view": allView
   },
   data() {
     return {
       menuItem: [
         {
           name: "首页",
-          router: "/homepage"
+          router: "/home"
         },
         {
-          name: "杂学笔记",
-          router: "/note"
+          name: "前端热门技术",
+          router: "/web"
         },
         {
           name: "听说3D技术前景不错",
-          router: "/three"
+          router: "/threejs"
         },
         {
           name: "搞搞设计耍耍",
           router: "/design"
+        },
+        {
+          name: "杂学笔记",
+          router: "/note"
         },
         {
           name: "不增涉足的地方",
@@ -96,7 +96,6 @@ export default {
     getFiles() {
       fileList.fileList.then(res => {
         this.$store.dispatch("fileList", res);
-        console.log(res)
         this.articleList = this.$store.getters["fileList"];
       });
     },
@@ -166,20 +165,11 @@ export default {
         }
       }
     }
-  }
-  .right-main {
-    width: calc(100% - 360px);
-    padding: 0 120px;
-    .box {
-      height: 460px;
-      background: #f0f;
-    }
-    .content {
-      margin-top: 40px;
-      color: #909090;
-      line-height: 28px;
+    & + div.view {
+      padding: 0 100px;
+      width:100%;
+       
     }
   }
 }
-
 </style>

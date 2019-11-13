@@ -1,8 +1,8 @@
 <template>
-  <ul :class="type=='left-bar'?'bar-art':'main-art'">
+  <ul :class="type == 'left-bar' ? 'bar-art' : 'main-art'">
     <el-row :gutter="25">
       <el-col
-        :span="type=='left-bar'?24:6"
+        :span="type == 'left-bar' ? 24 : 6"
         v-for="data in artData"
         :key="data.id"
         class="col-bottom"
@@ -11,31 +11,42 @@
           <div class="main">
             <div class="image">
               <img
-                :src="data.coverPng?data.coverPng:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1570873494706&di=eb1afd97a7f996dcaaf82daa6e356b42&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F17%2F02%2F06%2Fed0c0ddc6271b0717ca64ffdf847eab6.jpg'"
+                :src="
+                  data.coverPng
+                    ? data.coverPng
+                    : 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1570873494706&di=eb1afd97a7f996dcaaf82daa6e356b42&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F17%2F02%2F06%2Fed0c0ddc6271b0717ca64ffdf847eab6.jpg'
+                "
               />
             </div>
             <div class="content">
-              <p class="artlistname" v-text="data.name"></p>
-              <div class="brief" v-if="type!=='left-bar'" v-text="sliceStr(data.brief)"></div>
+              <p
+                class="artlistname"
+                v-text="
+                  type == 'left-bar' ? sliceStr(data.name, 13) : data.name
+                "
+              ></p>
+              <div
+                class="brief"
+                v-if="type !== 'left-bar'"
+                v-text="data.brief"
+              ></div>
               <p class="other">
-                <!-- <span class="author" v-if="data.author&&type!=='left-bar'">
-                  <span class="iconfont">&#xe65c;</span>
-                  {{data.author}}
-                </span>-->
-                <span class="tag" v-if="data.tag&&type!=='left-bar'">
+                <span class="tag" v-if="data.tag && type !== 'left-bar'">
                   <span class="iconfont">&#xe607;</span>
-                  {{data.tag}}
+                  {{ data.tag }}
                 </span>
-                <!-- <span class="reprint" v-if="data.reprint&&type!=='left-bar'">
-                  <span class="iconfont">&#xe63e;</span>
-                  <a :href="data.reprint" target="view_window" v-text="'转载'"></a>
-                </span>-->
                 <span class="date" v-if="data.date">
                   <span class="iconfont">&#xe613;</span>
-                  {{$dateFormet(data.date)}}
+                  {{ $dateFormet(data.date) }}
                 </span>
               </p>
-              <div class="into" v-if="type!=='left-bar'" @click="toArticle(data)">进入</div>
+              <div
+                class="into"
+                v-if="type !== 'left-bar'"
+                @click="toArticle(data)"
+              >
+                进入
+              </div>
             </div>
           </div>
         </li>
@@ -72,8 +83,8 @@ export default {
         }
       });
     },
-    sliceStr(str) {
-      return str.slice(0, 20) + "...";
+    sliceStr(str, n) {
+      return str.length < n ? str : str.slice(0, n) + "...";
     }
   }
 };
@@ -116,11 +127,11 @@ export default {
           font-size: 18px;
           color: #696969;
           margin-bottom: 5px;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 3;
-          overflow: hidden;
-          min-height:72px
+          // display: -webkit-box;
+          // -webkit-box-orient: vertical;
+          // -webkit-line-clamp: 3;
+          // overflow: hidden;
+          min-height: 72px;
         }
         .brief {
           font-size: 14px;
@@ -180,15 +191,19 @@ export default {
         font-size: 18px;
         color: #ff6069;
         margin: 20px 0;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        // overflow: hidden;
+        // white-space: nowrap;
+        // text-overflow: ellipsis;
         cursor: pointer;
+        min-height: 75px;
       }
       .brief {
         margin-bottom: 20px;
         color: #909090;
-        height: 60px;
+        // height: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       .other {
         color: #909090;
