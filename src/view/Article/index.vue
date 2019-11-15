@@ -3,6 +3,9 @@
     <div class="top-title" v-if="artInfo">
       <div class="adrom"></div>
       <div class="title-main mw">
+        <div class="goback" @click="goback()">
+          返回
+        </div>
         <div class="content">
           <p class="name" v-text="artInfo.name"></p>
           <p>
@@ -44,13 +47,13 @@
         @change="changeData"
         v-highlight
       />
-      <iframe
+      <!-- <iframe
         frameborder="0"
         width="100%"
         height="500px"
         v-if="artInfo && artInfo.case"
-        :src="`../../../static/three_case/html/${artInfo.case}`"
-      ></iframe>
+        :src="`./static/three_case/html/${artInfo.case}`"
+      ></iframe> -->
     </div>
     <div class="gitalk">
       <div id="gitalk-container"></div>
@@ -61,9 +64,10 @@
 <script>
 import hljs from "highlight.js";
 import Vue from "vue";
-import Gitalk from "gitalk";
 import "gitalk/dist/gitalk.css";
+import Gitalk from "gitalk";
 import "highlight.js/styles/googlecode.css";
+
 Vue.directive("highlight", function(el) {
   let blocks = el.querySelectorAll("pre code");
   blocks.forEach(block => {
@@ -86,8 +90,10 @@ export default {
     changeData(value, render) {
       console.log(render);
     },
+    goback() {
+      this.$router.go(-1);
+    },
     initTalk() {
-      console.log(this.$route.query.id);
       var gitalk = new Gitalk({
         // gitalk的主要参数
         clientID: "0b1f628009d15179d27f",
@@ -96,7 +102,7 @@ export default {
         owner: "sunhuapeng",
         admin: ["sunhuapeng"],
         id: this.$route.query.id,
-        distractionFreeMode: false,
+        distractionFreeMode: false
       });
       gitalk.render("gitalk-container");
     },
@@ -108,17 +114,19 @@ export default {
   },
   mounted() {
     let id = this.$route.query.id;
-
-    this.articles.forEach(d => {
-      if (this.$route.query.id == d.id) {
-        this.artInfo = d;
-        import(`../../../static/md/${d.fileName}`).then(res => {
-          this.value = res;
-        });
-      }
-    });
+      this.articles.forEach(d => {
+        if (this.$route.query.id == d.id) {
+          this.artInfo = d;
+          import(`../../../static/md/${d.fileName}`).then(res => {
+            this.$nextTick(() => {
+              this.value = res;
+              this.initTalk();
+            });
+          });
+        } else {
+        }
+      });
     document.body.scrollTop = 0 + "px";
-    this.initTalk();
   }
 };
 </script>
@@ -189,12 +197,12 @@ div.adrom {
   }
 }
 .article-main {
-  width: 1000px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 100px;
 }
 .gitalk {
-  width: 1000px;
+  max-width: 1000px;
   margin: 10px auto;
 }
 </style>

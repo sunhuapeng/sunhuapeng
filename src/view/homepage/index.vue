@@ -92,11 +92,15 @@ export default {
   created() {
     this.getFiles();
   },
+  watch: {
+    articleList(newV, oldV) {
+      this.$store.dispatch("fileList", newV);
+    }
+  },
   methods: {
     getFiles() {
       fileList.fileList.then(res => {
-        this.$store.dispatch("fileList", res);
-        this.articleList = this.$store.getters["fileList"];
+        this.articleList = res;
       });
     },
     searchEnterFun() {
@@ -167,8 +171,8 @@ export default {
     }
     & + div.view {
       padding: 0 100px;
-      width:100%;
-       
+      width: calc(100% - 360px);
+      box-sizing: border-box;
     }
   }
 }
