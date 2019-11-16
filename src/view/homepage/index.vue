@@ -2,12 +2,7 @@
   <div class="homepage">
     <div class="left-bar">
       <div class="search-box">
-        <input
-          type="text"
-          v-model="search"
-          @keydown.enter="searchEnterFun"
-          placeholder="SEARCH"
-        />
+        <input type="text" v-model="search" @keydown.enter="searchEnterFun" placeholder="SEARCH" />
       </div>
       <div class="Modular">
         <h2>MENU</h2>
@@ -28,13 +23,13 @@
       </div>
     </div>
     <div class="view">
-      <router-view class="roter-view"> </router-view>
+      <router-view class="roter-view"></router-view>
     </div>
   </div>
 </template>
 <script>
 import artlist from "@/components/artList";
-import fileList from "@/common/js/getFile.js";
+import GetFiles from "@/common/js/getFile.js";
 import artMain from "@/components/artMain";
 import allView from "@/view/three-model/allView";
 export default {
@@ -72,8 +67,8 @@ export default {
           router: "/journey"
         },
         {
-          name: "陪她",
-          router: "/her"
+          name: "小 · 记",
+          router: "/love"
         },
         {
           name: "自恋一下",
@@ -99,23 +94,13 @@ export default {
   },
   methods: {
     getFiles() {
-      fileList.fileList.then(res => {
+      let fileFun = new GetFiles();
+      fileFun.init();
+      fileFun.getFile.then(res => {
         this.articleList = res;
       });
     },
-    searchEnterFun() {
-      console.log(this.search);
-      // let newArr = [];
-      // this.articleList = this.$store.getters["fileList"];
-      // this.articleList.forEach(e => {
-      //   if (this.search) {
-      //     if (e.name.indexOf(this.search) !== -1) {
-      //       newArr.push(e);
-      //     }
-      //     this.articleList = newArr;
-      //   }
-      // });
-    }
+    searchEnterFun() {}
   }
 };
 </script>

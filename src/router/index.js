@@ -26,6 +26,24 @@ const case3D = r =>
     () => r(require("@/view/3dMax/index.vue")),
     "case3D"
   );
+const design = r =>
+  require.ensure(
+    [],
+    () => r(require("@/view/design/index.vue")),
+    "design"
+  );
+const love = r =>
+  require.ensure(
+    [],
+    () => r(require("@/view/love/index.vue")),
+    "love"
+  );
+const nothing = r =>
+  require.ensure(
+    [],
+    () => r(require("@/view/nothing/index.vue")),
+    "nothing"
+  );
 
 Vue.use(Router);
 
@@ -61,6 +79,18 @@ const router = new Router({
           }
         },
         {
+          path: "/design",
+          name: "design",
+          component: design,
+          meta: {
+            metaInfo: {
+              title: "平面设计相关",
+              keywords: "",
+              description: "主要为前端技术笔记，涵盖内容广泛..."
+            }
+          }
+        },
+        {
           path: "/threejs",
           name: "threejs",
           component: case3D,
@@ -81,6 +111,30 @@ const router = new Router({
               title: "杂学笔记",
               keywords: "",
               description: "学习笔记，涵盖内容广泛..."
+            }
+          }
+        },
+        {
+          path: "/nothing",
+          name: "nothing",
+          component: nothing,
+          meta: {
+            metaInfo: {
+              title: "杂学笔记",
+              keywords: "",
+              description: "学习笔记，涵盖内容广泛..."
+            }
+          }
+        },
+        {
+          path: "/love",
+          name: "love",
+          component: love,
+          meta: {
+            metaInfo: {
+              title: "小·记",
+              keywords: "",
+              description: ""
             }
           }
         }

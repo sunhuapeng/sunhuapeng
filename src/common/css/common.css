@@ -64,3 +64,7 @@
   border-bottom: 1px solid #ff6069;
   font-family: "iskpota";
 }
+.image {
+  width: 100%;
+  display: block;
+}

@@ -1,5 +1,6 @@
 <template>
-  <div class="other-note">
+  <div class="other-note Modular">
+    <h2>NOTE</h2>
     <art-list
       v-if="articleList.length"
       :type="''"
@@ -11,7 +12,7 @@
   </div>
 </template>
 <script>
-import fileList from "@/common/js/getFile.js";
+import GetFiles from "@/common/js/getFile.js";
 import artlist from "@/components/artList";
 export default {
   name: "note",
@@ -21,19 +22,19 @@ export default {
   data() {
     return {
       articleList: [],
-      tagArr: ["html", "css", "javascript", "vue"]
     };
+  },
+  watch: {
+    articleList(newV, oldV) {
+      this.$store.dispatch("fileList", newV);
+    }
   },
   methods: {
     getFiles() {
-      fileList.fileList.then(res => {
-        this.$store.dispatch("fileList", res);
-        let arr = this.$store.getters["fileList"];
-        arr.forEach(child => {
-          if (child.tag.indexOf("学习") !== -1) {
-            this.articleList.push(child);
-          }
-        });
+      let fileFun = new GetFiles();
+      fileFun.init("笔记");
+      fileFun.getFile.then(res => {
+        this.articleList = res;
       });
     }
   },

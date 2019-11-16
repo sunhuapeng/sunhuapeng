@@ -4,7 +4,7 @@
       <div class="adrom"></div>
       <div class="title-main mw">
         <div class="goback" @click="goback()">
-          返回
+          <i class="el-icon-d-arrow-left"></i>
         </div>
         <div class="content">
           <p class="name" v-text="artInfo.name"></p>
@@ -19,11 +19,7 @@
             </span>
             <span class="reprint" v-if="artInfo.reprint">
               <span class="iconfont">&#xe63e;</span>
-              <a
-                :href="artInfo.reprint"
-                target="view_window"
-                v-text="'转载·侵删'"
-              ></a>
+              <a :href="artInfo.reprint" target="view_window" v-text="'转载·侵删'"></a>
             </span>
             <span class="date" v-if="artInfo.date">
               <span class="iconfont">&#xe613;</span>
@@ -53,10 +49,16 @@
         height="500px"
         v-if="artInfo && artInfo.case"
         :src="`./static/three_case/html/${artInfo.case}`"
-      ></iframe> -->
+      ></iframe>-->
     </div>
     <div class="gitalk">
-      <div id="gitalk-container"></div>
+      <div id="gitalk-container">
+        <div class="gt-container">
+        <div class="gt-meta"></div>
+        <div class="gt-header"></div>
+        <div class="gt-comments"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -64,10 +66,10 @@
 <script>
 import hljs from "highlight.js";
 import Vue from "vue";
+
+import "highlight.js/styles/googlecode.css";
 import "gitalk/dist/gitalk.css";
 import Gitalk from "gitalk";
-import "highlight.js/styles/googlecode.css";
-
 Vue.directive("highlight", function(el) {
   let blocks = el.querySelectorAll("pre code");
   blocks.forEach(block => {
@@ -114,18 +116,18 @@ export default {
   },
   mounted() {
     let id = this.$route.query.id;
-      this.articles.forEach(d => {
-        if (this.$route.query.id == d.id) {
-          this.artInfo = d;
-          import(`../../../static/md/${d.fileName}`).then(res => {
-            this.$nextTick(() => {
-              this.value = res;
-              this.initTalk();
-            });
+    this.articles.forEach(d => {
+      if (this.$route.query.id == d.id) {
+        this.artInfo = d;
+        import(`../../../static/md/${d.fileName}`).then(res => {
+          this.$nextTick(() => {
+            this.value = res;
+            this.initTalk();
           });
-        } else {
-        }
-      });
+        });
+      } else {
+      }
+    });
     document.body.scrollTop = 0 + "px";
   }
 };
@@ -204,5 +206,17 @@ div.adrom {
 .gitalk {
   max-width: 1000px;
   margin: 10px auto;
+}
+.goback {
+  position: fixed;
+  right: 20px;
+  bottom: 120px;
+  cursor: pointer;
+  font-size:24px;
+  color:#e9e9e9;
+  z-index:9999;
+  &:hover{
+    font-size:32px
+  }
 }
 </style>

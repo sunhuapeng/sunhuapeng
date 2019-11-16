@@ -6,7 +6,7 @@
 </template>
 <script>
 import artList from "@/components/artList";
-import fileList from "@/common/js/getFile.js";
+import GetFiles from "@/common/js/getFile.js";
 export default {
   name: "art-main",
   components: {
@@ -20,11 +20,17 @@ export default {
   created() {
     this.getFiles();
   },
+  watch: {
+    articleList(newV, oldV) {
+      this.$store.dispatch("fileList", newV);
+    }
+  },
   methods: {
     getFiles() {
-      fileList.fileList.then(res => {
-        this.$store.dispatch("fileList", res);
-        this.articleList = this.$store.getters["fileList"];
+      let fileFun = new GetFiles();
+      fileFun.init();
+      fileFun.getFile.then(res => {
+        this.articleList = res;
       });
     }
   }
