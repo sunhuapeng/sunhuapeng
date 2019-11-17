@@ -114,3 +114,9 @@ img {
 a {
   text-decoration:none;
 }
+
+/* markdown style */
+
+.article-page .article-main .v-note-wrapper{
+  padding:0 20px;
+}
