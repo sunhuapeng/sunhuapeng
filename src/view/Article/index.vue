@@ -15,7 +15,7 @@
             </span>
             <span class="tag" v-if="artInfo.tag">
               <span class="iconfont">&#xe607;</span>
-              {{ artInfo.tag }}
+              <span v-for="data in artInfo.tag" :key="data" v-text="' '  + data"></span>
             </span>
             <span class="reprint" v-if="artInfo.reprint">
               <span class="iconfont">&#xe63e;</span>
@@ -192,7 +192,7 @@ div.adrom {
       opacity: 0.8;
       line-height: 32px;
       margin-top: 20px;
-      span ~ span {
+      &>span ~ span {
         margin-left: 40px;
       }
     }

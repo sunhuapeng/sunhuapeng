@@ -1,3 +1,4 @@
+import axios from 'axios'
 export default {
   install(Vue) {
     var that = this
@@ -11,15 +12,16 @@ export default {
       }
     })
     // 格式化时间戳
-    Vue.prototype.$dateFormet = function (val) {
-      let v = new Date(Number(val))
-      var year=v.getFullYear(); 
-      var month=v.getMonth()+1; 
-      var date=v.getDate(); 
-      var hour=v.getHours(); 
-      var minute=v.getMinutes(); 
-      var second=v.getSeconds(); 
-      return year+"-"+(month<10?'0'+month:month)+"-"+(date<10?'0'+date:date); 
-    }
+    Vue.prototype.$dateFormet = (val) => {
+        let v = new Date(Number(val))
+        var year = v.getFullYear();
+        var month = v.getMonth() + 1;
+        var date = v.getDate();
+        var hour = v.getHours();
+        var minute = v.getMinutes();
+        var second = v.getSeconds();
+        return year + "-" + (month < 10 ? '0' + month : month) + "-" + (date < 10 ? '0' + date : date);
+      }
+      
   }
 }

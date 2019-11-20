@@ -19,7 +19,7 @@
       </div>
       <div class="Modular">
         <h2>HISTORY</h2>
-        <art-list :type="'left-bar'" :artData="articleList"></art-list>
+        <!-- <art-list :type="'left-bar'" :artData="articleList"></art-list> -->
       </div>
     </div>
     <div class="view">
